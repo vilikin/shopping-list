@@ -1,8 +1,7 @@
 PRODUCT BACKLOG
 
     File       : PRODUCTBACKLOG.txt
-    Time-stamp : <date, use iso-standard> <firstname> <lastname>
-                 // Example: 2013-04-10T15:30 Jussi Pohjolainen
+    Time-stamp : 2016-11-05T18:00 Vili Kinnunen
     Description: Product Backlog is the master list of all functionality desired in 
                  the product. 
 
@@ -10,20 +9,22 @@ PRODUCT BACKLOG WITH RELEASES
 
     RELEASE 1: <date, use iso-standard>
 
-    - <feature 1>
-    - <feature 2>
-    - <feature n>
+    - User can add items to shopping list using CLI
+    - User can save list as txt file
+    - User can open list from file
 
     RELEASE 2: <date, use iso-standard>
 
-    - <feature 1>
-    - <feature 2>
-    - <feature n>
+    - User can use GUI to view and edit list
+    - User can save list to a file of his/her choosing
+    - User can open list from a file of his/her choosing
+    - User can link the application with his/her Dropbox account
+    - User can save list to Dropbox
+    - User can open list from Dropbox
 
     RELEASE 3: <date, use iso-standard>
 
-    - <feature 1>
-    - <feature 2>
-    - <feature n>
+    - User can connect client to the server
+    - User can view and edit list that is saved on the server
 
 End of file.

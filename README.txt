@@ -1,40 +1,26 @@
 README
 
     File       : README.txt
-    Time-stamp : <date, use iso-standard> <firstname> <lastname>
-                 // Example: 2013-04-10T15:30 Jussi Pohjolainen
+    Time-stamp : 2016-11-05T18:30 Vili Kinnunen
     Description: Contains general information about the product and
                  releases.
 
 GENERAL INFO
 
-    Product name     : <insert name here>
-    Developer        : <firstname> <lastname>, <email-address>
-    Device target(s) : <Mac | Windows | Ubuntu | Android|Ios (universal? iPhone? iPad? ..) | Windows Phone>
-    Price            : <insert price/free>
-    Url(s)           : <insert store url(s) here>
+    Product name     : Shopping list
+    Developer        : Vili Kinnunen, vili.kinnunen@cs.tamk.fi
+    Device target(s) : Windows, Mac
+    Price            : Free
 
 DESCRIPTION OF THE PRODUCT
 
-    <insert description of the product here: Lorem ipsum dolor sit amet, 
-    consectetur adipiscing elit. Integer quis ante at urna commodo dapibus.
-    Aenean blandit, neque eget pellentesque viverra, arcu nulla volutpat justo,
-    ut congue est odio id justo. Nullam varius mi id turpis imperdiet 
-    hendrerit non vel purus. Donec gravida fringilla lacus sed mollis. 
-    Maecenas nulla odio, tincidunt ut convallis sed, dapibus in tellus.
-    Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-    cubilia Curae; Sed vitae lacus et libero placerat interdum. Nullam
-    adipiscing nisi ac neque viverra blandit. Pellentesque vel dolor eget
-    tellus convallis imperdiet at nec leo. Praesent a volutpat justo.
-    Curabitur purus leo, porta nec dignissim eu, malesuada sit amet quam.
-    Maecenas turpis nisl, condimentum sit amet porta eget, iaculis ac quam.
-    Quisque tempor eleifend odio. Pellentesque sit amet dolor vitae lectus
-    aliquet bibendum.>
+    This product allows users to keep track of items on their shopping
+    lists. Server handles the list and users are able to view and modify the
+    list using their applications.
 
 FILES
 
     Every release-n folder contains same folder hierarchy (see release-<x>/)
-    // modify the following dir structure if necessary!
 
     projectwork/
     |
@@ -50,8 +36,8 @@ FILES
         |
         +--RELEASENOTES.txt   // Notes about this release. Changes to 
         |                     // product backlog.
-        +--bin/               // Application package (for example .apk in android)
+        +--bin/               // Application package(s)
         |
-        +--src/<course-code>-<lastname>-<firstname>.zip   // whole project
+        +--src/4A00CN39-3002-kinnunen-vili.zip   // whole project
 
 End of file.
