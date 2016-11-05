@@ -1,0 +1,29 @@
+PRODUCT BACKLOG
+
+    File       : PRODUCTBACKLOG.txt
+    Time-stamp : <date, use iso-standard> <firstname> <lastname>
+                 // Example: 2013-04-10T15:30 Jussi Pohjolainen
+    Description: Product Backlog is the master list of all functionality desired in 
+                 the product. 
+
+PRODUCT BACKLOG WITH RELEASES
+
+    RELEASE 1: <date, use iso-standard>
+
+    - <feature 1>
+    - <feature 2>
+    - <feature n>
+
+    RELEASE 2: <date, use iso-standard>
+
+    - <feature 1>
+    - <feature 2>
+    - <feature n>
+
+    RELEASE 3: <date, use iso-standard>
+
+    - <feature 1>
+    - <feature 2>
+    - <feature n>
+
+End of file.
