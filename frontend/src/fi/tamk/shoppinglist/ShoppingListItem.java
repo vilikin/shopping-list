@@ -4,7 +4,7 @@ package fi.tamk.shoppinglist;
  * Implements shopping list item.
  *
  * @author Vili Kinnunen
- * @version 2016.11.5
+ * @version 2016.1105
  * @since 1.8
  */
 public class ShoppingListItem {
