@@ -9,6 +9,11 @@ package fi.tamk.shoppinglist;
  */
 public class Main {
 
+    /**
+     * Initializes shopping list and CLI.
+     *
+     * @param args Command-line parameters (not used)
+     */
     public static void main(String[] args) {
         ShoppingList shoppingList = new ShoppingList();
 

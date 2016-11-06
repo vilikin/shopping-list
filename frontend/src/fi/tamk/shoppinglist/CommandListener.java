@@ -13,22 +13,45 @@ import java.util.Scanner;
  * @since 1.8
  */
 public class CommandListener {
+
+    /**
+     * Shopping list to interact with
+     */
     private ShoppingList shoppingList;
+
+    /**
+     * Scanner listening to CLI input
+     */
     private Scanner sc;
+
+    /**
+     * FileHandler responsible for saving and opening content
+     */
     private FileHandler file;
+
+    /**
+     * If user input is processed or not
+     */
     private boolean processCommands;
 
+    /**
+     * Initializes command listener to interact with shopping list.
+     *
+     * @param shoppingList Shopping list to interact with
+     */
     public CommandListener(ShoppingList shoppingList) {
         this.shoppingList = shoppingList;
         this.sc = new Scanner(System.in);
         file = new FileHandler("shoppinglist.txt");
-
 
         processCommands = true;
 
         startLoop();
     }
 
+    /**
+     * Starts asking user for input.
+     */
     private void startLoop() {
         while (processCommands) {
             System.out.println("Give shopping list " +
@@ -38,6 +61,11 @@ public class CommandListener {
         }
     }
 
+    /**
+     * Processes given commands and executes required operations.
+     *
+     * @param command Input given by user
+     */
     private void process(String command) {
         command = command.trim();
 
@@ -50,7 +78,8 @@ public class CommandListener {
         } else {
             shoppingList.append(Tools.strToList(command));
 
-            ShoppingListItem[] listItems = Tools.listToArray(shoppingList.getList());
+            ShoppingListItem[] listItems = Tools.listToArray(
+                    shoppingList.getList());
 
             System.out.println("Your Shopping List now:");
 

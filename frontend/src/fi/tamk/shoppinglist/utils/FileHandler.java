@@ -10,16 +10,33 @@ import java.nio.file.Paths;
 import java.util.List;
 
 /**
- * Created by vilik on 5.11.2016.
+ * Implements simplified methods to handle a file.
+ *
+ * @author Vili Kinnunen
+ * @version 2016.1105
+ * @since 1.8
  */
 public class FileHandler {
 
+    /**
+     * Name of the file
+     */
     private String filename;
 
+    /**
+     * Initializes FileHandler to interact with specified file.
+     *
+     * @param filename Name of the file to interact with
+     */
     public FileHandler(String filename) {
         this.filename = filename;
     }
 
+    /**
+     * Reads contents of the file.
+     *
+     * @return All lines of the file in one single string
+     */
     public String read() {
         Path filepath = Paths.get(filename);
         String content = "";
@@ -36,6 +53,11 @@ public class FileHandler {
         return content;
     }
 
+    /**
+     * Replaces file content with the given string.
+     *
+     * @param content New content of the file
+     */
     public void write(String content) {
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(filename)));) {
             writer.print(content);
