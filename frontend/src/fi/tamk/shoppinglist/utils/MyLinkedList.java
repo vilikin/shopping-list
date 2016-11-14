@@ -105,10 +105,14 @@ public class MyLinkedList<T> implements MyList<T> {
             T removedElement = removed.getElement();
 
             if (index + 1 < size && previous != null) {
-                System.out.println("first");
                 previous.setNext(removed.getNext());
+            } else if (previous == null) {
+                if (removed.getNext() != null) {
+                    first = removed.getNext();
+                } else {
+                    first = null;
+                }
             } else {
-                System.out.println("third");
                 previous.setNext(null);
             }
 

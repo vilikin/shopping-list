@@ -93,9 +93,14 @@ public class ShoppingList {
     }
 
     public void deleteItems(int[] indexes) {
-        for (int index : indexes) {
-            list.remove(index);
-            updateTable();
+        ShoppingListItem[] removeItems = new ShoppingListItem[indexes.length];
+
+        for (int i = 0; i < indexes.length; i++) {
+            removeItems[i] = list.get(indexes[i]);
+        }
+
+        for (ShoppingListItem removeItem : removeItems) {
+            list.remove(removeItem);
         }
 
         updateTable();
