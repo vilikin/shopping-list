@@ -92,6 +92,15 @@ public class ShoppingList {
         updateTable();
     }
 
+    public void deleteItems(int[] indexes) {
+        for (int index : indexes) {
+            list.remove(index);
+            updateTable();
+        }
+
+        updateTable();
+    }
+
     public void updateTable() {
         if (window != null) {
             window.dataChanged();

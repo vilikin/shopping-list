@@ -70,7 +70,11 @@ public class MyLinkedList<T> implements MyList<T> {
                 temp = temp.getNext();
             }
 
-            return temp.getElement();
+            if (temp != null) {
+                return temp.getElement();
+            } else {
+                return null;
+            }
         } else {
             return null;
         }
@@ -101,10 +105,10 @@ public class MyLinkedList<T> implements MyList<T> {
             T removedElement = removed.getElement();
 
             if (index + 1 < size && previous != null) {
+                System.out.println("first");
                 previous.setNext(removed.getNext());
-            } else if (previous == null) {
-                first = null;
             } else {
+                System.out.println("third");
                 previous.setNext(null);
             }
 

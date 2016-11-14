@@ -1,6 +1,7 @@
 package fi.tamk.shoppinglist.gui;
 
 import fi.tamk.shoppinglist.ShoppingList;
+import fi.tamk.shoppinglist.ShoppingListItem;
 import fi.tamk.shoppinglist.utils.Tools;
 
 import javax.swing.table.AbstractTableModel;
@@ -9,12 +10,12 @@ import javax.swing.table.AbstractTableModel;
  * Created by vilik on 14.11.2016.
  */
 public class MyTableModel extends AbstractTableModel {
-
     ShoppingList sl;
 
     public MyTableModel(ShoppingList sl) {
         this.sl = sl;
     }
+
     public String getColumnName(int col) {
         return col == 0 ? "Item" : "Quantity";
     }
@@ -45,11 +46,20 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     public Object getValueAt(int row, int col) {
+        ShoppingListItem item = sl.getList().get(row);
         switch (col) {
             case 0:
-                return sl.getList().get(row).getName();
+                if (item != null) {
+                    return item.getName();
+                } else {
+                    return "error" + row;
+                }
             case 1:
-                return sl.getList().get(row).getQuantity();
+                if (item != null) {
+                    return item.getQuantity();
+                } else {
+                    return "error";
+                }
             default:
                 return "error";
         }
