@@ -56,6 +56,12 @@ public class ShoppingList {
         updateTable();
     }
 
+    public void append(ShoppingListItem appendItem) {
+        MyLinkedList<ShoppingListItem> tmpList = new MyLinkedList<>();
+        tmpList.add(appendItem);
+        append(tmpList);
+    }
+
     /**
      * Replaces current shopping list with a new list.
      *

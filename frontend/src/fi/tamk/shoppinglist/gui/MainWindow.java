@@ -27,13 +27,21 @@ public class MainWindow extends JFrame {
         setTitle("Shopping list");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        setLayout(new BorderLayout());
+
+
+        /* ------------- ADD TABLE WITH SHOPPING LIST CONTENT ------------- */
         AbstractTableModel dataModel = new MyTableModel(sl);
 
         table = new JTable(dataModel);
-        InputMap inputMap = table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        InputMap inputMap = table.getInputMap(
+                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
         ActionMap actionMap = table.getActionMap();
 
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "delete_row");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0),
+                "delete_row");
+
         actionMap.put("delete_row", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 if (!table.isEditing()) {
@@ -46,8 +54,36 @@ public class MainWindow extends JFrame {
 
         scrollpane.setPreferredSize(windowSize);
 
-        add(scrollpane);
+        add(scrollpane, BorderLayout.NORTH);
 
+        /* ------------- ADD INPUT BAR ------------------------------------ */
+
+        JPanel inputPanel = new JPanel(new FlowLayout());
+
+        int inputWidth = (int)(windowSize.width * 0.4);
+        LabelledInput nameInput = new LabelledInput("Item", inputWidth, 30);
+        LabelledInput quantityInput = new LabelledInput("Quantity",
+                inputWidth, 30);
+
+        JPanel btnPanel = new JPanel(new BorderLayout());
+
+        JLabel emptyLabel = new JLabel();
+        emptyLabel.setPreferredSize(new Dimension(40, 15));
+
+        JButton inputBtn = new JButton("Add");
+        inputBtn.setPreferredSize(new Dimension(60, 29));
+
+        inputBtn.addActionListener(new InputListener(nameInput, quantityInput, sl));
+
+        btnPanel.add(emptyLabel, BorderLayout.NORTH);
+        btnPanel.add(inputBtn, BorderLayout.SOUTH);
+
+
+        inputPanel.add(nameInput);
+        inputPanel.add(quantityInput);
+        inputPanel.add(btnPanel);
+
+        add(inputPanel, BorderLayout.SOUTH);
         pack();
 
         setVisible(true);
