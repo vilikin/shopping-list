@@ -20,6 +20,7 @@ public class Main {
         System.out.println("SHOPPING LIST\n" +
                 "Tampere University of Applied Sciences");
 
+        MainWindow window = new MainWindow();
         CommandListener cliListener = new CommandListener(shoppingList);
     }
 }

@@ -20,11 +20,6 @@ public class CommandListener {
     private ShoppingList shoppingList;
 
     /**
-     * Scanner listening to CLI input
-     */
-    private Scanner sc;
-
-    /**
      * FileHandler responsible for saving and opening content
      */
     private FileHandler file;
@@ -32,7 +27,7 @@ public class CommandListener {
     /**
      * If user input is processed or not
      */
-    private boolean processCommands;
+    public boolean processCommands;
 
     /**
      * Initializes command listener to interact with shopping list.
@@ -41,24 +36,12 @@ public class CommandListener {
      */
     public CommandListener(ShoppingList shoppingList) {
         this.shoppingList = shoppingList;
-        this.sc = new Scanner(System.in);
         file = new FileHandler("shoppinglist.txt");
 
         processCommands = true;
 
-        startLoop();
-    }
-
-    /**
-     * Starts asking user for input.
-     */
-    private void startLoop() {
-        while (processCommands) {
-            System.out.println("Give shopping list " +
-                    "(example: 1 milk;2 tomato;3 carrot;)");
-
-            process(sc.nextLine());
-        }
+        Thread loop = new Thread(new CLILoop(this));
+        loop.start();
     }
 
     /**
@@ -66,7 +49,7 @@ public class CommandListener {
      *
      * @param command Input given by user
      */
-    private void process(String command) {
+    public void process(String command) {
         command = command.trim();
 
         if (command.equals("exit")) {
