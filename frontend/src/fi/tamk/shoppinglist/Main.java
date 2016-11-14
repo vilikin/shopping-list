@@ -1,5 +1,7 @@
 package fi.tamk.shoppinglist;
 
+import fi.tamk.shoppinglist.gui.MainWindow;
+
 /**
  * Implements client side of the shopping list application.
  *
@@ -20,7 +22,8 @@ public class Main {
         System.out.println("SHOPPING LIST\n" +
                 "Tampere University of Applied Sciences");
 
-        MainWindow window = new MainWindow();
+        MainWindow window = new MainWindow(shoppingList);
+        shoppingList.setWindow(window);
         CommandListener cliListener = new CommandListener(shoppingList);
     }
 }

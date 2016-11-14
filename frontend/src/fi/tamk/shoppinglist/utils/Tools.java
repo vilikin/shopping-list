@@ -78,7 +78,7 @@ public class Tools {
      * @param integerString String to check
      * @return If string contains valid quantity or not
      */
-    private static boolean isQuantity(String integerString) {
+    public static boolean isQuantity(String integerString) {
         int quantity = 0;
         boolean valid = true;
 

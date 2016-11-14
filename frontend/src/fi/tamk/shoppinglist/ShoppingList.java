@@ -1,7 +1,7 @@
 package fi.tamk.shoppinglist;
 
+import fi.tamk.shoppinglist.gui.MainWindow;
 import fi.tamk.shoppinglist.utils.MyLinkedList;
-import fi.tamk.shoppinglist.utils.MyList;
 
 /**
  * Implements the core shopping list functions.
@@ -16,6 +16,8 @@ public class ShoppingList {
      * List containing all of the shopping list items
      */
     private MyLinkedList<ShoppingListItem> list;
+
+    private MainWindow window;
 
     /**
      * Initializes empty shopping list.
@@ -50,6 +52,8 @@ public class ShoppingList {
                 list.add(appendItem);
             }
         }
+
+        updateTable();
     }
 
     /**
@@ -59,6 +63,8 @@ public class ShoppingList {
      */
     public void replace(MyLinkedList<ShoppingListItem> newList) {
         list = newList;
+
+        updateTable();
     }
 
     /**
@@ -68,5 +74,27 @@ public class ShoppingList {
      */
     public MyLinkedList<ShoppingListItem> getList() {
         return list;
+    }
+
+    public void setWindow(MainWindow window) {
+        this.window = window;
+    }
+
+    public void updateItemName(int index, String name) {
+        list.get(index).setName(name);
+
+        updateTable();
+    }
+
+    public void updateItemQuantity(int index, int quantity) {
+        list.get(index).setQuantity(quantity);
+
+        updateTable();
+    }
+
+    public void updateTable() {
+        if (window != null) {
+            window.dataChanged();
+        }
     }
 }
