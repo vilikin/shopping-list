@@ -2,12 +2,14 @@ package fi.tamk.shoppinglist.gui;
 
 import fi.tamk.shoppinglist.ShoppingList;
 import fi.tamk.shoppinglist.ShoppingListItem;
+import fi.tamk.shoppinglist.utils.DropboxConnector;
 import fi.tamk.shoppinglist.utils.FileHandler;
 import fi.tamk.shoppinglist.utils.MyLinkedList;
 import fi.tamk.shoppinglist.utils.Tools;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 /**
  * Created by vilik on 15.11.2016.
@@ -16,6 +18,8 @@ public class MyMenuBar extends JMenuBar {
     private ShoppingList sl;
 
     public MyMenuBar(ShoppingList sl) {
+        DropboxConnector dbx = new DropboxConnector(sl);
+
         final JFileChooser fc = new JFileChooser();
 
         JMenu fileMenu = new JMenu("File");
@@ -74,5 +78,19 @@ public class MyMenuBar extends JMenuBar {
         fileMenu.add(combine);
 
         fileMenu.addSeparator();
+
+        JMenuItem dbConnect = new JMenuItem("Connect with DropBox",
+                KeyEvent.VK_C);
+
+        dbConnect.addActionListener((e) -> {
+            if (dbx.startConnect()) {
+                String key = JOptionPane.showInputDialog(this, "Enter key:");
+                if (dbx.finishConnect(key)) {
+                    JOptionPane.showMessageDialog(this, "Connected!");
+                }
+            }
+        });
+
+        fileMenu.add(dbConnect);
     }
 }
