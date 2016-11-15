@@ -1,9 +1,6 @@
 package fi.tamk.shoppinglist.utils;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,30 +16,15 @@ import java.util.List;
 public class FileHandler {
 
     /**
-     * Name of the file
-     */
-    private String filename;
-
-    /**
-     * Initializes FileHandler to interact with specified file.
-     *
-     * @param filename Name of the file to interact with
-     */
-    public FileHandler(String filename) {
-        this.filename = filename;
-    }
-
-    /**
      * Reads contents of the file.
      *
      * @return All lines of the file in one single string
      */
-    public String read() {
-        Path filepath = Paths.get(filename);
+    public static String read(File file) {
         String content = "";
 
         try {
-            List<String> lines = Files.readAllLines(filepath);
+            List<String> lines = Files.readAllLines(file.toPath());
             for (String line : lines) {
                 content += line;
             }
@@ -58,8 +40,8 @@ public class FileHandler {
      *
      * @param content New content of the file
      */
-    public void write(String content) {
-        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(filename)));) {
+    public static void write(File file, String content) {
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)));) {
             writer.print(content);
         } catch (IOException e) {
             e.printStackTrace();

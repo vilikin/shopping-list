@@ -4,13 +4,15 @@ import fi.tamk.shoppinglist.ShoppingList;
 import fi.tamk.shoppinglist.ShoppingListItem;
 import fi.tamk.shoppinglist.utils.Tools;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 
 /**
  * Created by vilik on 14.11.2016.
  */
-public class InputListener implements ActionListener {
+public class InputListener extends AbstractAction implements ActionListener {
 
     private LabelledInput name;
     private LabelledInput quantity;
@@ -26,7 +28,6 @@ public class InputListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(name.getText() + " " + quantity.getText());
         if (!name.getText().trim().isEmpty() &&
                 Tools.isQuantity(quantity.getText())) {
             sl.append(new ShoppingListItem(name.getText(),
@@ -34,6 +35,13 @@ public class InputListener implements ActionListener {
 
             name.setText("");
             quantity.setText("");
+
+            name.getInputField().requestFocus();
+        } else if (!Tools.isQuantity(quantity.getText())) {
+            quantity.getInputField().requestFocus();
+            quantity.getInputField().selectAll();
+        } else {
+            name.getInputField().requestFocus();
         }
     }
 }

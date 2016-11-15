@@ -20,11 +20,6 @@ public class CommandListener {
     private ShoppingList shoppingList;
 
     /**
-     * FileHandler responsible for saving and opening content
-     */
-    private FileHandler file;
-
-    /**
      * If user input is processed or not
      */
     public boolean processCommands;
@@ -36,7 +31,6 @@ public class CommandListener {
      */
     public CommandListener(ShoppingList shoppingList) {
         this.shoppingList = shoppingList;
-        file = new FileHandler("shoppinglist.txt");
 
         processCommands = true;
 
@@ -54,10 +48,6 @@ public class CommandListener {
 
         if (command.equals("exit")) {
             System.exit(0);
-        } else if (command.equals("save")) {
-            file.write(Tools.listToStr(shoppingList.getList()));
-        } else if (command.equals("open")) {
-            shoppingList.replace(Tools.strToList(file.read()));
         } else {
             shoppingList.append(Tools.strToList(command));
 

@@ -31,4 +31,8 @@ public class LabelledInput extends JPanel {
     public void setText(String text) {
         inputField.setText(text);
     }
+
+    public JTextField getInputField() {
+        return inputField;
+    }
 }

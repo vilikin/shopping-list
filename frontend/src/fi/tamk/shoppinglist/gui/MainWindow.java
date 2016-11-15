@@ -29,6 +29,12 @@ public class MainWindow extends JFrame {
 
         setLayout(new BorderLayout());
 
+        /* ------------- ADD MAIN MENU ------------------------------------ */
+
+        MyMenuBar menu = new MyMenuBar(sl);
+
+        setJMenuBar(menu);
+
 
         /* ------------- ADD TABLE WITH SHOPPING LIST CONTENT ------------- */
         AbstractTableModel dataModel = new MyTableModel(sl);
@@ -82,6 +88,18 @@ public class MainWindow extends JFrame {
         inputPanel.add(nameInput);
         inputPanel.add(quantityInput);
         inputPanel.add(btnPanel);
+
+        InputMap panelInputMap = inputPanel.getInputMap(
+                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        ActionMap panelActionMap = inputPanel.getActionMap();
+
+        panelInputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0),
+                "add_item");
+
+        panelActionMap.put("add_item", new InputListener(nameInput,
+                quantityInput, sl));
+
 
         add(inputPanel, BorderLayout.SOUTH);
         pack();
