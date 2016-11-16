@@ -3,7 +3,10 @@ package fi.tamk.shoppinglist.utils;
 import com.dropbox.core.*;
 import fi.tamk.shoppinglist.ShoppingList;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.util.Locale;
 
@@ -60,6 +63,45 @@ public class DropboxConnector {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    public String[] getFiles() {
+        if (isConnected()) {
+            try {
+                DbxEntry.WithChildren listing = client.getMetadataWithChildren("/");
+
+                String[] files = new String[listing.children.size()];
+
+                for (int i = 0; i < listing.children.size(); i++) {
+                    files[i] = listing.children.get(i).name;
+                }
+
+                return files;
+            } catch (Exception e) {
+                return new String[0];
+            }
+        } else {
+            return new String[0];
+        }
+    }
+
+    public String getContent(String filename) {
+        if (isConnected()) {
+            try {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                //FileOutputStream outputStream = new FileOutputStream("/dbxfiles/"+filename);
+                try {
+                    DbxEntry.File downloadedFile = client.getFile("/" + filename, null, baos);
+                    return baos.toString();
+                } finally {
+                    baos.close();
+                }
+            } catch (Exception e) {
+                return "";
+            }
+        } else {
+            return "";
         }
     }
 

@@ -37,7 +37,7 @@ public class MyMenuBar extends JMenuBar {
                 KeyEvent.VK_O);
 
         open.addActionListener((e) -> {
-            int action = fc.showOpenDialog(this);
+            int action = fc.showOpenDialog(this.getParent());
 
             if (action == JFileChooser.APPROVE_OPTION) {
                 String rawContent = FileHandler.read(fc.getSelectedFile());
@@ -52,7 +52,7 @@ public class MyMenuBar extends JMenuBar {
                 KeyEvent.VK_S);
 
         save.addActionListener((e) -> {
-            int action = fc.showSaveDialog(this);
+            int action = fc.showSaveDialog(this.getParent());
 
             if (action == JFileChooser.APPROVE_OPTION) {
                 String content = Tools.listToStr(sl.getList());
@@ -66,7 +66,7 @@ public class MyMenuBar extends JMenuBar {
                 KeyEvent.VK_C);
 
         combine.addActionListener((e) -> {
-            int action = fc.showOpenDialog(this);
+            int action = fc.showOpenDialog(this.getParent());
 
             if (action == JFileChooser.APPROVE_OPTION) {
                 String rawContent = FileHandler.read(fc.getSelectedFile());
@@ -80,17 +80,44 @@ public class MyMenuBar extends JMenuBar {
         fileMenu.addSeparator();
 
         JMenuItem dbConnect = new JMenuItem("Connect with DropBox",
-                KeyEvent.VK_C);
+                KeyEvent.VK_D);
 
         dbConnect.addActionListener((e) -> {
             if (dbx.startConnect()) {
-                String key = JOptionPane.showInputDialog(this, "Enter key:");
+                String key = JOptionPane.showInputDialog(this.getParent(), "Enter key:");
                 if (dbx.finishConnect(key)) {
-                    JOptionPane.showMessageDialog(this, "Connected!");
+                    JOptionPane.showMessageDialog(this.getParent(), "Connected!");
                 }
             }
         });
 
         fileMenu.add(dbConnect);
+
+        JMenuItem dbOpen = new JMenuItem("Open from Dropbox",
+                KeyEvent.VK_P);
+
+        dbOpen.addActionListener((e) -> {
+            String[] choices = dbx.getFiles();
+            if (choices.length > 0) {
+                String input = (String)JOptionPane.showInputDialog(
+                        this.getParent(),
+                        "Select file to open:",
+                        "Open from Dropbox", JOptionPane.QUESTION_MESSAGE, null,
+                        choices,
+                        choices[0]);
+
+                String fileContent = dbx.getContent(input);
+
+                sl.replace(Tools.strToList(fileContent));
+            } else {
+                JOptionPane.showMessageDialog(this.getParent(),
+                        "There are no files in your list directory!",
+                        "Open from Dropbox", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        fileMenu.add(dbOpen);
+
+        // InputStream stream = new ByteArrayInputStream(exampleString.getBytes(StandardCharsets.UTF_8));
     }
 }
