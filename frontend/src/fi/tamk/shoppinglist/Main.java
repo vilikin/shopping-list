@@ -1,5 +1,6 @@
 package fi.tamk.shoppinglist;
 
+import fi.tamk.shoppinglist.cli.CommandListener;
 import fi.tamk.shoppinglist.gui.MainWindow;
 
 /**

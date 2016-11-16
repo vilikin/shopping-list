@@ -1,9 +1,8 @@
-package fi.tamk.shoppinglist;
+package fi.tamk.shoppinglist.cli;
 
-import fi.tamk.shoppinglist.utils.FileHandler;
+import fi.tamk.shoppinglist.ShoppingList;
+import fi.tamk.shoppinglist.ShoppingListItem;
 import fi.tamk.shoppinglist.utils.Tools;
-
-import java.util.Scanner;
 
 /**
  * Implements a CLI listener that registers commands given to the application.
@@ -34,7 +33,7 @@ public class CommandListener {
 
         processCommands = true;
 
-        Thread loop = new Thread(new CLILoop(this));
+        Thread loop = new Thread(new Loop(this));
         loop.start();
     }
 

@@ -15,10 +15,8 @@ import java.io.File;
  * Created by vilik on 15.11.2016.
  */
 public class MyMenuBar extends JMenuBar {
-    private ShoppingList sl;
-
     public MyMenuBar(ShoppingList sl) {
-        DropboxConnector dbx = new DropboxConnector(sl);
+        DropboxConnector dbx = new DropboxConnector();
 
         final JFileChooser fc = new JFileChooser();
 
@@ -99,7 +97,7 @@ public class MyMenuBar extends JMenuBar {
         dbOpen.addActionListener((e) -> {
             String[] choices = dbx.getFiles();
             if (choices.length > 0) {
-                String input = (String)JOptionPane.showInputDialog(
+                String input = (String) JOptionPane.showInputDialog(
                         this.getParent(),
                         "Select file to open:",
                         "Open from Dropbox", JOptionPane.QUESTION_MESSAGE, null,
@@ -118,6 +116,24 @@ public class MyMenuBar extends JMenuBar {
 
         fileMenu.add(dbOpen);
 
-        // InputStream stream = new ByteArrayInputStream(exampleString.getBytes(StandardCharsets.UTF_8));
+        JMenuItem dbSave = new JMenuItem("Save to Dropbox",
+                KeyEvent.VK_T);
+
+        dbSave.addActionListener((e) -> {
+            String fileName = JOptionPane.showInputDialog(
+                    this.getParent(), "Save file as");
+
+            String fileContent = Tools.listToStr(sl.getList());
+
+            if (dbx.saveFile(fileName, fileContent)) {
+                JOptionPane.showMessageDialog(this.getParent(),
+                        "File saved succesfully!");
+            } else {
+                JOptionPane.showMessageDialog(this.getParent(),
+                        "There was an error while saving the file!");
+            }
+        });
+
+        fileMenu.add(dbSave);
     }
 }

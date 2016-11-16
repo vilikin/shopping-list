@@ -1,11 +1,11 @@
-package fi.tamk.shoppinglist;
+package fi.tamk.shoppinglist.cli;
 
 import java.util.Scanner;
 
 /**
  * Created by vilik on 14.11.2016.
  */
-public class CLILoop implements Runnable {
+public class Loop implements Runnable {
     CommandListener listener;
 
     /**
@@ -13,7 +13,7 @@ public class CLILoop implements Runnable {
      */
     private Scanner sc;
 
-    public CLILoop(CommandListener listener) {
+    public Loop(CommandListener listener) {
         this.sc = new Scanner(System.in);
         this.listener = listener;
     }

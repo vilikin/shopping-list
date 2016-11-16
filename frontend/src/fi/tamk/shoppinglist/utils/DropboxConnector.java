@@ -3,21 +3,15 @@ package fi.tamk.shoppinglist.utils;
 import com.dropbox.core.*;
 import fi.tamk.shoppinglist.ShoppingList;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 /**
  * Created by vilik on 15.11.2016.
  */
 public class DropboxConnector {
-    final String APP_KEY = "narweyk4dkhonm9";
-    final String APP_SECRET = "h0vbueln4oknyg7";
-
-    private ShoppingList sl;
 
     private DbxAppInfo appInfo;
     private DbxRequestConfig config;
@@ -27,8 +21,10 @@ public class DropboxConnector {
 
     private String accessToken;
 
-    public DropboxConnector(ShoppingList sl) {
-        this.sl = sl;
+    public DropboxConnector() {
+        String APP_KEY = "narweyk4dkhonm9";
+        String APP_SECRET = "h0vbueln4oknyg7";
+
         appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
         config = new DbxRequestConfig(
                 "ShoppingList/1.0", Locale.getDefault().toString());
@@ -69,7 +65,8 @@ public class DropboxConnector {
     public String[] getFiles() {
         if (isConnected()) {
             try {
-                DbxEntry.WithChildren listing = client.getMetadataWithChildren("/");
+                DbxEntry.WithChildren listing =
+                        client.getMetadataWithChildren("/");
 
                 String[] files = new String[listing.children.size()];
 
@@ -90,9 +87,10 @@ public class DropboxConnector {
         if (isConnected()) {
             try {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                //FileOutputStream outputStream = new FileOutputStream("/dbxfiles/"+filename);
+
                 try {
-                    DbxEntry.File downloadedFile = client.getFile("/" + filename, null, baos);
+                    DbxEntry.File downloadedFile = client.getFile(
+                            "/" + filename, null, baos);
                     return baos.toString();
                 } finally {
                     baos.close();
@@ -102,6 +100,26 @@ public class DropboxConnector {
             }
         } else {
             return "";
+        }
+    }
+
+    public boolean saveFile(String filename, String fileContent) {
+        if (isConnected()) {
+            try (InputStream stream = new ByteArrayInputStream(
+                    fileContent.getBytes(StandardCharsets.UTF_8))) {
+                client.uploadFile("/" + filename, DbxWriteMode.force(),
+                        fileContent.getBytes(StandardCharsets.UTF_8).length,
+                        stream);
+
+                stream.close();
+
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else {
+            return false;
         }
     }
 
