@@ -20,16 +20,12 @@ public class FileHandler {
      *
      * @return All lines of the file in one single string
      */
-    public static String read(File file) {
+    public static String read(File file) throws IOException {
         String content = "";
 
-        try {
-            List<String> lines = Files.readAllLines(file.toPath());
-            for (String line : lines) {
-                content += line;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        List<String> lines = Files.readAllLines(file.toPath());
+        for (String line : lines) {
+            content += line;
         }
 
         return content;
@@ -40,11 +36,8 @@ public class FileHandler {
      *
      * @param content New content of the file
      */
-    public static void write(File file, String content) {
-        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)));) {
-            writer.print(content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void write(File file, String content) throws IOException {
+        PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+        writer.print(content);
     }
 }

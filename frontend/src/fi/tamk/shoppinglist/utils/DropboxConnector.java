@@ -3,6 +3,7 @@ package fi.tamk.shoppinglist.utils;
 import com.dropbox.core.*;
 import fi.tamk.shoppinglist.ShoppingList;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -29,11 +30,21 @@ public class DropboxConnector {
         config = new DbxRequestConfig(
                 "ShoppingList/1.0", Locale.getDefault().toString());
 
+        boolean gotToken = true;
+
         try {
             accessToken = FileHandler.read(new File("dbauth.txt"));
             client = new DbxClient(config, accessToken);
         } catch (Exception e) {
-            FileHandler.write(new File("dbauth.txt"), "");
+            gotToken = false;
+        }
+
+        if (!gotToken) {
+            try {
+                FileHandler.write(new File("dbauth.txt"), "");
+            } catch (Exception e) {
+
+            }
         }
     }
 
@@ -123,6 +134,6 @@ public class DropboxConnector {
     }
 
     public boolean isConnected() {
-        return !client.getAccessToken().equals("");
+        return client != null && !client.getAccessToken().equals("");
     }
 }

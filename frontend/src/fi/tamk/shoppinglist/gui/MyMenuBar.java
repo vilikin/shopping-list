@@ -38,9 +38,13 @@ public class MyMenuBar extends JMenuBar {
             int action = fc.showOpenDialog(this.getParent());
 
             if (action == JFileChooser.APPROVE_OPTION) {
-                String rawContent = FileHandler.read(fc.getSelectedFile());
+                try {
+                    String rawContent = FileHandler.read(fc.getSelectedFile());
 
-                sl.replace(Tools.strToList(rawContent));
+                    sl.replace(Tools.strToList(rawContent));
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(this.getParent(), "Couldn't open that file!");
+                }
             }
         });
 
@@ -53,8 +57,12 @@ public class MyMenuBar extends JMenuBar {
             int action = fc.showSaveDialog(this.getParent());
 
             if (action == JFileChooser.APPROVE_OPTION) {
-                String content = Tools.listToStr(sl.getList());
-                FileHandler.write(fc.getSelectedFile(), content);
+                try {
+                    String content = Tools.listToStr(sl.getList());
+                    FileHandler.write(fc.getSelectedFile(), content);
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(this.getParent(), "Error while saving the file!");
+                }
             }
         });
 
@@ -67,9 +75,12 @@ public class MyMenuBar extends JMenuBar {
             int action = fc.showOpenDialog(this.getParent());
 
             if (action == JFileChooser.APPROVE_OPTION) {
-                String rawContent = FileHandler.read(fc.getSelectedFile());
-
-                sl.append(Tools.strToList(rawContent));
+                try {
+                    String rawContent = FileHandler.read(fc.getSelectedFile());
+                    sl.append(Tools.strToList(rawContent));
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(this.getParent(), "Couldn't open that file!");
+                }
             }
         });
 
