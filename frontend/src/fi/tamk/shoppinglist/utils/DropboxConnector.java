@@ -115,7 +115,6 @@ public class DropboxConnector {
 
                 return true;
             } catch (Exception e) {
-                e.printStackTrace();
                 return false;
             }
         } else {
@@ -124,6 +123,6 @@ public class DropboxConnector {
     }
 
     public boolean isConnected() {
-        return client != null;
+        return !client.getAccessToken().equals("");
     }
 }

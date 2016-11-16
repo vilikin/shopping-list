@@ -77,20 +77,6 @@ public class MyMenuBar extends JMenuBar {
 
         fileMenu.addSeparator();
 
-        JMenuItem dbConnect = new JMenuItem("Connect with DropBox",
-                KeyEvent.VK_D);
-
-        dbConnect.addActionListener((e) -> {
-            if (dbx.startConnect()) {
-                String key = JOptionPane.showInputDialog(this.getParent(), "Enter key:");
-                if (dbx.finishConnect(key)) {
-                    JOptionPane.showMessageDialog(this.getParent(), "Connected!");
-                }
-            }
-        });
-
-        fileMenu.add(dbConnect);
-
         JMenuItem dbOpen = new JMenuItem("Open from Dropbox",
                 KeyEvent.VK_P);
 
@@ -114,8 +100,6 @@ public class MyMenuBar extends JMenuBar {
             }
         });
 
-        fileMenu.add(dbOpen);
-
         JMenuItem dbSave = new JMenuItem("Save to Dropbox",
                 KeyEvent.VK_T);
 
@@ -134,6 +118,27 @@ public class MyMenuBar extends JMenuBar {
             }
         });
 
+        JMenuItem dbConnect = new JMenuItem("Connect with DropBox",
+                KeyEvent.VK_D);
+
+        dbConnect.addActionListener((e) -> {
+            if (dbx.startConnect()) {
+                String key = JOptionPane.showInputDialog(this.getParent(), "Enter key:");
+                if (dbx.finishConnect(key)) {
+                    JOptionPane.showMessageDialog(this.getParent(), "Connected!");
+                    dbOpen.setEnabled(true);
+                    dbSave.setEnabled(true);
+                }
+            }
+        });
+
+        fileMenu.add(dbConnect);
+        fileMenu.add(dbOpen);
         fileMenu.add(dbSave);
+
+        if (!dbx.isConnected()) {
+            dbOpen.setEnabled(false);
+            dbSave.setEnabled(false);
+        }
     }
 }
