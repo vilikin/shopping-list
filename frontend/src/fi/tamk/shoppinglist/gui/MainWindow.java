@@ -98,6 +98,8 @@ public class MainWindow extends JFrame {
         LabelledInput quantityInput = new LabelledInput("Quantity",
                 inputWidth, 30);
 
+        quantityInput.setText("1");
+
         JPanel btnPanel = new JPanel(new BorderLayout());
 
         JLabel emptyLabel = new JLabel();
@@ -132,6 +134,8 @@ public class MainWindow extends JFrame {
         pack();
 
         setVisible(true);
+
+        nameInput.getInputField().requestFocus();
     }
 
     /**
