@@ -10,14 +10,36 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 
 /**
- * Created by vilik on 14.11.2016.
+ * Implements action listener that handles adding items in GUI.
+ *
+ * @author Vili Kinnunen
+ * @version 2016.1117
+ * @since 1.8
  */
 public class InputListener extends AbstractAction implements ActionListener {
 
+    /**
+     * Input field that contains name for the item.
+     */
     private LabelledInput name;
+
+    /**
+     * Input field that contains quantity for the item.
+     */
     private LabelledInput quantity;
+
+    /**
+     * Shopping list to interact with.
+     */
     private ShoppingList sl;
 
+    /**
+     * Initializes action listener with input fields and shopping list.
+     *
+     * @param name      Input field that contains name for the item
+     * @param quantity  Input field that contains quantity for the item
+     * @param sl        Shopping list to interact with
+     */
     public InputListener(LabelledInput name, LabelledInput quantity,
                          ShoppingList sl) {
 
@@ -26,6 +48,12 @@ public class InputListener extends AbstractAction implements ActionListener {
         this.sl = sl;
     }
 
+    /**
+     * Adds new item to the shopping list if input is valid.
+     * If input is not valid, focuses the field that contained invalid input.
+     *
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!name.getText().trim().isEmpty() &&
@@ -34,7 +62,7 @@ public class InputListener extends AbstractAction implements ActionListener {
                     Integer.parseInt(quantity.getText())));
 
             name.setText("");
-            quantity.setText("");
+            quantity.setText("1");
 
             name.getInputField().requestFocus();
         } else if (!Tools.isQuantity(quantity.getText())) {

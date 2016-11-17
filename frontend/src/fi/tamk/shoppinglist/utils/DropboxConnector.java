@@ -1,27 +1,51 @@
 package fi.tamk.shoppinglist.utils;
 
 import com.dropbox.core.*;
-import fi.tamk.shoppinglist.ShoppingList;
-
-import javax.swing.*;
 import java.io.*;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 /**
- * Created by vilik on 15.11.2016.
+ * Handles connection to Dropbox.
+ *
+ * @author Vili Kinnunen
+ * @version 2016.1117
+ * @since 1.8
  */
 public class DropboxConnector {
 
+    /**
+     * Dropbox app info
+     */
     private DbxAppInfo appInfo;
+
+    /**
+     * Config for Dropbox requests
+     */
     private DbxRequestConfig config;
+
+    /**
+     * Dropbox web auth
+     */
     private DbxWebAuthNoRedirect webAuth;
 
+    /**
+     * Dropbox client
+     */
     private DbxClient client;
 
+    /**
+     * Access token for Dropbox
+     */
     private String accessToken;
 
+    /**
+     * Initializes Dropbox connector.
+     *
+     * Tries to read access token from file. If token exists, initializes
+     * client. If not, creates empty file for the token.
+     */
     public DropboxConnector() {
         String APP_KEY = "narweyk4dkhonm9";
         String APP_SECRET = "h0vbueln4oknyg7";
@@ -48,6 +72,11 @@ public class DropboxConnector {
         }
     }
 
+    /**
+     * Opens authentication page and prompts user for key.
+     *
+     * @return If process started without errors
+     */
     public boolean startConnect() {
         try {
             webAuth = new DbxWebAuthNoRedirect(config,
@@ -61,6 +90,12 @@ public class DropboxConnector {
         }
     }
 
+    /**
+     * Finishes connection process.
+     *
+     * @param key   Key from the authentication page
+     * @return      If authentication was completed
+     */
     public boolean finishConnect(String key) {
         try {
             DbxAuthFinish authFinish = webAuth.finish(key);
@@ -73,6 +108,11 @@ public class DropboxConnector {
         }
     }
 
+    /**
+     * Lists all files in apps Dropbox folder.
+     *
+     * @return  Array of filenames in apps Dropbox folder
+     */
     public String[] getFiles() {
         if (isConnected()) {
             try {
@@ -94,6 +134,12 @@ public class DropboxConnector {
         }
     }
 
+    /**
+     * Reads content of specified file from Dropbox.
+     *
+     * @param filename  File to read
+     * @return          Content of the file
+     */
     public String getContent(String filename) {
         if (isConnected()) {
             try {
@@ -114,6 +160,13 @@ public class DropboxConnector {
         }
     }
 
+    /**
+     * Saves file to Dropbox.
+     *
+     * @param filename      Name for the file
+     * @param fileContent   Content of the file
+     * @return              If file was saved
+     */
     public boolean saveFile(String filename, String fileContent) {
         if (isConnected()) {
             try (InputStream stream = new ByteArrayInputStream(
@@ -133,6 +186,11 @@ public class DropboxConnector {
         }
     }
 
+    /**
+     * Gets status of the connection.
+     *
+     * @return  If app is connected to Dropbox
+     */
     public boolean isConnected() {
         return client != null && !client.getAccessToken().equals("");
     }

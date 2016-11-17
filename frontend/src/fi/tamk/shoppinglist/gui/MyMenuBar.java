@@ -9,10 +9,13 @@ import fi.tamk.shoppinglist.utils.Tools;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.io.File;
 
 /**
- * Created by vilik on 15.11.2016.
+ * Implements menu bar and actions it holds.
+ *
+ * @author Vili Kinnunen
+ * @version 2016.1117
+ * @since 1.8
  */
 public class MyMenuBar extends JMenuBar {
     public MyMenuBar(ShoppingList sl) {

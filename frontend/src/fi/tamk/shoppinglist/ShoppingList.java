@@ -17,6 +17,9 @@ public class ShoppingList {
      */
     private MyLinkedList<ShoppingListItem> list;
 
+    /**
+     * GUI that interacts with the shopping list
+     */
     private MainWindow window;
 
     /**
@@ -28,6 +31,7 @@ public class ShoppingList {
 
     /**
      * Appends items from the given list to the end of shopping list.
+     *
      * If item with same name already exists in the shopping list,
      * quantity of the existing item is increased.
      *
@@ -56,6 +60,14 @@ public class ShoppingList {
         updateTable();
     }
 
+    /**
+     * Appends one item to the end of shopping list.
+     *
+     * If item with same name already exists in the shopping list,
+     * quantity of the existing item is increased.
+     *
+     * @param appendItem Item to append to the list
+     */
     public void append(ShoppingListItem appendItem) {
         MyLinkedList<ShoppingListItem> tmpList = new MyLinkedList<>();
         tmpList.add(appendItem);
@@ -82,22 +94,44 @@ public class ShoppingList {
         return list;
     }
 
+    /**
+     * Sets shopping list to interact with GUI.
+     *
+     * @param window GUI to interact with
+     */
     public void setWindow(MainWindow window) {
         this.window = window;
     }
 
+    /**
+     * Changes items name in the shopping list.
+     *
+     * @param index Index of the item
+     * @param name  New name for the item
+     */
     public void updateItemName(int index, String name) {
         list.get(index).setName(name);
 
         updateTable();
     }
 
+    /**
+     * Changes items quantity in the shopping list.
+     *
+     * @param index     Index of the item
+     * @param quantity  New quantity for the item
+     */
     public void updateItemQuantity(int index, int quantity) {
         list.get(index).setQuantity(quantity);
 
         updateTable();
     }
 
+    /**
+     * Deletes specified items from the shopping list.
+     *
+     * @param indexes Indexes of all the items to remove from the shopping list.
+     */
     public void deleteItems(int[] indexes) {
         ShoppingListItem[] removeItems = new ShoppingListItem[indexes.length];
 
@@ -112,6 +146,9 @@ public class ShoppingList {
         updateTable();
     }
 
+    /**
+     * Updates GUI.
+     */
     public void updateTable() {
         if (window != null) {
             window.dataChanged();

@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 /**
- * Implements simplified methods to handle a file.
+ * Implements simple methods to handle a file.
  *
  * @author Vili Kinnunen
  * @version 2016.1105

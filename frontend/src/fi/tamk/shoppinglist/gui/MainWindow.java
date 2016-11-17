@@ -4,18 +4,41 @@ import fi.tamk.shoppinglist.ShoppingList;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 /**
- * Created by vilik on 14.11.2016.
+ * Implements main window of GUI.
+ *
+ * @author Vili Kinnunen
+ * @version 2016.1117
+ * @since 1.8
  */
 public class MainWindow extends JFrame {
+
+    /**
+     * Shopping list to interact with
+     */
     private ShoppingList sl;
+
+    /**
+     * Model for the JTable
+     */
     private AbstractTableModel model;
+
+    /**
+     * Table that displays the shopping list
+     */
     private JTable table;
 
+    /**
+     * Creates main window.
+     *
+     * @param sl Shopping list to interact with
+     */
     public MainWindow(ShoppingList sl) {
         this.sl = sl;
 
@@ -37,9 +60,13 @@ public class MainWindow extends JFrame {
 
 
         /* ------------- ADD TABLE WITH SHOPPING LIST CONTENT ------------- */
-        AbstractTableModel dataModel = new MyTableModel(sl);
+        TableModel dataModel = new MyTableModel(sl);
 
         table = new JTable(dataModel);
+
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+        table.setRowSorter(sorter);
+
         InputMap inputMap = table.getInputMap(
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
@@ -107,7 +134,11 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Updates tables contents from the shopping list.
+     */
     public void dataChanged() {
         table.updateUI();
+        table.getRowSorter().allRowsChanged();
     }
 }
