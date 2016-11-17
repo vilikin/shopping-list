@@ -37,7 +37,8 @@ public class FileHandler {
      * @param content New content of the file
      */
     public static void write(File file, String content) throws IOException {
-        PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)));
-        writer.print(content);
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
+            writer.print(content);
+        }
     }
 }

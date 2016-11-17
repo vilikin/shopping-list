@@ -59,6 +59,7 @@ public class MyMenuBar extends JMenuBar {
             if (action == JFileChooser.APPROVE_OPTION) {
                 try {
                     String content = Tools.listToStr(sl.getList());
+                    System.out.println(content);
                     FileHandler.write(fc.getSelectedFile(), content);
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(this.getParent(), "Error while saving the file!");
