@@ -7,11 +7,24 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implements all operations available in the API.
+ *
+ * @author Vili Kinnunen vili.kinnunen@cs.tamk.fi
+ * @version 2016.1121
+ * @since 1.8
+ */
 @Path("/items")
 public class Resource {
 
+    /**
+     * JDBC MySQL connection.
+     */
     private Connection conn;
 
+    /**
+     * Initializes MySQL connection.
+     */
     public Resource() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -26,6 +39,11 @@ public class Resource {
         }
     }
 
+    /**
+     * Gets all items in the shopping list.
+     *
+     * @return Shopping list content
+     */
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public Items getItems() {
@@ -44,6 +62,14 @@ public class Resource {
         return new Items(items);
     }
 
+    /**
+     * Appends new item to the shopping list.
+     *
+     * If item with the specified name already exists, quantity is increased.
+     *
+     * @param item Item to be added to the list
+     * @return Response indicating if the operation was successful
+     */
     @POST
     @Consumes(MediaType.APPLICATION_XML)
     public Response addItem(Item item) {
@@ -78,6 +104,12 @@ public class Resource {
         }
     }
 
+    /**
+     * Removes an item from the shopping list.
+     *
+     * @param name  Name of the item to be removed
+     * @return      Response indicating if the operation was successful
+     */
     @Path("/{name}")
     @DELETE
     public Response removeItem(@PathParam("name") String name) {
