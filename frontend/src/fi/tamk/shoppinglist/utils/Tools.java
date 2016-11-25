@@ -71,6 +71,45 @@ public class Tools {
         return array;
     }
 
+    public static String itemToXML(ShoppingListItem item) {
+        return "<item>" +
+                "<name>" + item.getName() + "</name>" +
+                "<quantity>" + item.getQuantity() + "</quantity>" +
+                "</item>";
+    }
+
+    public static String listToXML(MyLinkedList<ShoppingListItem> list) {
+        String xml = "<items>";
+        for (int i = 0; i < list.size(); i++) {
+            xml += itemToXML(list.get(i));
+        }
+
+        xml += "</items>";
+
+        return xml;
+    }
+
+    public static MyLinkedList<ShoppingListItem> XMLToList(String xml) {
+        try {
+            String items[] = xml.split("<item>");
+            MyLinkedList<ShoppingListItem> list = new MyLinkedList<>();
+
+            for (String item : items) {
+                item = item.split("</item>")[0];
+
+                String name = item.split("<name>")[1].split("</name>")[0];
+                int quantity = Integer.parseInt(item.split("<quantity>")[1]
+                        .split("</quantity>")[0]);
+
+                list.add(new ShoppingListItem(name, quantity));
+            }
+
+            return list;
+        } catch (Exception e) {
+            return new MyLinkedList<ShoppingListItem>();
+        }
+    }
+
     /**
      * Checks if given string can be converted to an integer and
      * is larger than 0.

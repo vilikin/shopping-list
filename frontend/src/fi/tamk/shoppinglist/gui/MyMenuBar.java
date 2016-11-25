@@ -2,10 +2,7 @@ package fi.tamk.shoppinglist.gui;
 
 import fi.tamk.shoppinglist.ShoppingList;
 import fi.tamk.shoppinglist.ShoppingListItem;
-import fi.tamk.shoppinglist.utils.DropboxConnector;
-import fi.tamk.shoppinglist.utils.FileHandler;
-import fi.tamk.shoppinglist.utils.MyLinkedList;
-import fi.tamk.shoppinglist.utils.Tools;
+import fi.tamk.shoppinglist.utils.*;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -20,6 +17,7 @@ import java.awt.event.KeyEvent;
 public class MyMenuBar extends JMenuBar {
     public MyMenuBar(ShoppingList sl) {
         DropboxConnector dbx = new DropboxConnector();
+        RemoteConnector rc = new RemoteConnector();
 
         final JFileChooser fc = new JFileChooser();
 
@@ -155,5 +153,21 @@ public class MyMenuBar extends JMenuBar {
             dbOpen.setEnabled(false);
             dbSave.setEnabled(false);
         }
+
+        fileMenu.addSeparator();
+
+        JMenuItem remoteConnect = new JMenuItem("Connect to remote server",
+                KeyEvent.VK_R);
+
+        remoteConnect.addActionListener((e) -> {
+            String url = JOptionPane.showInputDialog(this.getParent(), "Enter remote address:");
+            if (url != null && rc.connect(url)) {
+                JOptionPane.showMessageDialog(this.getParent(), "Successfully connected!");
+            } else {
+                JOptionPane.showMessageDialog(this.getParent(), "Error! Couldn't connect to the remote server!");
+            }
+        });
+
+        fileMenu.add(remoteConnect);
     }
 }
