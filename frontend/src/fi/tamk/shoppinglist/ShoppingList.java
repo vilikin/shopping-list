@@ -181,10 +181,6 @@ public class ShoppingList {
      * Updates GUI and remote list when available.
      */
     public void update() {
-        if (window != null) {
-            window.dataChanged();
-        }
-
         if (remoteUrl != null) {
             new Thread(() -> {
 
@@ -208,6 +204,10 @@ public class ShoppingList {
 
                 allowRemoteUpdates = true;
             }).start();
+        }
+
+        if (window != null) {
+            window.dataChanged();
         }
     }
 }
