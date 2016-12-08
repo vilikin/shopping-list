@@ -91,10 +91,12 @@ public class Tools {
 
     public static MyLinkedList<ShoppingListItem> XMLToList(String xml) {
         try {
-            String items[] = xml.split("<item>");
+            String[] items = xml.split("<item>");
+
             MyLinkedList<ShoppingListItem> list = new MyLinkedList<>();
 
-            for (String item : items) {
+            for (int i = 1; i < items.length; i++) {
+                String item = items[i];
                 item = item.split("</item>")[0];
 
                 String name = item.split("<name>")[1].split("</name>")[0];

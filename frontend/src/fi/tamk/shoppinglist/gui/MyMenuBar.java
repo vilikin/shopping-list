@@ -15,9 +15,9 @@ import java.awt.event.KeyEvent;
  * @since 1.8
  */
 public class MyMenuBar extends JMenuBar {
+    private String url;
     public MyMenuBar(ShoppingList sl) {
         DropboxConnector dbx = new DropboxConnector();
-        RemoteConnector rc = new RemoteConnector();
 
         final JFileChooser fc = new JFileChooser();
 
@@ -159,15 +159,34 @@ public class MyMenuBar extends JMenuBar {
         JMenuItem remoteConnect = new JMenuItem("Connect to remote server",
                 KeyEvent.VK_R);
 
+        JMenuItem remoteDisconnect = new JMenuItem("Disconnect from remote server",
+                KeyEvent.VK_C);
+
+        remoteDisconnect.setEnabled(false);
+
         remoteConnect.addActionListener((e) -> {
-            String url = JOptionPane.showInputDialog(this.getParent(), "Enter remote address:");
-            if (url != null && rc.connect(url)) {
+            url = JOptionPane.showInputDialog(this.getParent(), "Enter remote address:");
+            if (url.charAt(url.length() - 1) == '/') {
+                url = url.substring(0, url.length() - 2);
+            }
+
+            if (url != null && RemoteConnector.tryConnect(url)) {
                 JOptionPane.showMessageDialog(this.getParent(), "Successfully connected!");
+                sl.setRemoteUrl(url);
+                remoteConnect.setEnabled(false);
+                remoteDisconnect.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(this.getParent(), "Error! Couldn't connect to the remote server!");
             }
         });
 
+        remoteDisconnect.addActionListener((e) -> {
+            sl.setRemoteUrl(null);
+            remoteConnect.setEnabled(true);
+            remoteDisconnect.setEnabled(false);
+        });
+
         fileMenu.add(remoteConnect);
+        fileMenu.add(remoteDisconnect);
     }
 }

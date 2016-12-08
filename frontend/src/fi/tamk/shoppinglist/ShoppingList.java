@@ -2,6 +2,11 @@ package fi.tamk.shoppinglist;
 
 import fi.tamk.shoppinglist.gui.MainWindow;
 import fi.tamk.shoppinglist.utils.MyLinkedList;
+import fi.tamk.shoppinglist.utils.RemoteConnector;
+import fi.tamk.shoppinglist.utils.Tools;
+
+import javax.swing.*;
+import java.rmi.Remote;
 
 /**
  * Implements the core shopping list functions.
@@ -22,6 +27,10 @@ public class ShoppingList {
      */
     private MainWindow window;
 
+    private String remoteUrl;
+
+    private boolean allowRemoteUpdates;
+
     /**
      * Initializes empty shopping list.
      */
@@ -31,14 +40,13 @@ public class ShoppingList {
 
     /**
      * Appends items from the given list to the end of shopping list.
-     *
+     * <p>
      * If item with same name already exists in the shopping list,
      * quantity of the existing item is increased.
      *
      * @param appendList List of items to add to the shopping list
      */
     public void append(MyLinkedList<ShoppingListItem> appendList) {
-
         for (int i = 0; i < appendList.size(); i++) {
             ShoppingListItem appendItem = appendList.get(i);
             boolean addNew = true;
@@ -57,12 +65,12 @@ public class ShoppingList {
             }
         }
 
-        updateTable();
+        update();
     }
 
     /**
      * Appends one item to the end of shopping list.
-     *
+     * <p>
      * If item with same name already exists in the shopping list,
      * quantity of the existing item is increased.
      *
@@ -82,7 +90,7 @@ public class ShoppingList {
     public void replace(MyLinkedList<ShoppingListItem> newList) {
         list = newList;
 
-        updateTable();
+        update();
     }
 
     /**
@@ -112,19 +120,19 @@ public class ShoppingList {
     public void updateItemName(int index, String name) {
         list.get(index).setName(name);
 
-        updateTable();
+        update();
     }
 
     /**
      * Changes items quantity in the shopping list.
      *
-     * @param index     Index of the item
-     * @param quantity  New quantity for the item
+     * @param index    Index of the item
+     * @param quantity New quantity for the item
      */
     public void updateItemQuantity(int index, int quantity) {
         list.get(index).setQuantity(quantity);
 
-        updateTable();
+        update();
     }
 
     /**
@@ -143,15 +151,83 @@ public class ShoppingList {
             list.remove(removeItem);
         }
 
-        updateTable();
+        update();
+    }
+
+    public void setRemoteUrl(String url) {
+        remoteUrl = url;
+
+        if (remoteUrl != null) {
+            allowRemoteUpdates = true;
+            new Thread(new RemoteUpdater(this)).start();
+        }
+    }
+
+    public String getRemoteUrl() {
+        return remoteUrl;
+    }
+
+    public void getListFromServer() {
+        if (remoteUrl != null && allowRemoteUpdates) {
+            list = RemoteConnector.getItems(remoteUrl);
+        }
+
+        if (window != null) {
+            window.dataChanged();
+        }
     }
 
     /**
-     * Updates GUI.
+     * Updates GUI and remote list when available.
      */
-    public void updateTable() {
+    public void update() {
         if (window != null) {
             window.dataChanged();
+        }
+
+        if (remoteUrl != null) {
+            new Thread(() -> {
+
+                allowRemoteUpdates = false;
+                boolean r = RemoteConnector.removeItems(remoteUrl);
+                boolean a = true;
+
+
+
+                for (int i = 0; i < list.size(); i++) {
+                    if (!RemoteConnector.appendItem(remoteUrl,
+                            Tools.itemToXML(list.get(i)))) {
+                        a = false;
+                    }
+                }
+
+                if (!r || !a) {
+                    JOptionPane.showMessageDialog(null,
+                            "Server error occured!");
+                }
+
+                allowRemoteUpdates = true;
+            }).start();
+        }
+    }
+}
+
+class RemoteUpdater implements Runnable {
+    private ShoppingList sl;
+
+    public RemoteUpdater(ShoppingList sl) {
+        this.sl = sl;
+    }
+
+    public void run() {
+        while (sl.getRemoteUrl() != null) {
+            sl.getListFromServer();
+
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
