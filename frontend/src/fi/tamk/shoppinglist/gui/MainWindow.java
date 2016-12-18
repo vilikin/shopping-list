@@ -75,6 +75,9 @@ public class MainWindow extends JFrame {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0),
                 "delete_row");
 
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                "delete_row");
+
         actionMap.put("delete_row", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 if (!table.isEditing()) {
@@ -136,6 +139,15 @@ public class MainWindow extends JFrame {
         setVisible(true);
 
         nameInput.getInputField().requestFocus();
+    }
+
+    /**
+     * Checks if table is being edited.
+     *
+     * @return  If table is being edited at the moment or not
+     */
+    public boolean isEditing() {
+        return table.isEditing();
     }
 
     /**

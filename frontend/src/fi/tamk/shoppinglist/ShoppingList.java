@@ -6,7 +6,6 @@ import fi.tamk.shoppinglist.utils.RemoteConnector;
 import fi.tamk.shoppinglist.utils.Tools;
 
 import javax.swing.*;
-import java.rmi.Remote;
 
 /**
  * Implements the core shopping list functions.
@@ -27,8 +26,14 @@ public class ShoppingList {
      */
     private MainWindow window;
 
+    /**
+     * Remote URL to sync the list with.
+     */
     private String remoteUrl;
 
+    /**
+     * If the remote updates are allowed at the moment or not.
+     */
     private boolean allowRemoteUpdates;
 
     /**
@@ -181,11 +186,8 @@ public class ShoppingList {
      * Syncs local list with the remote list.
      */
     public void getListFromServer() {
-        if (remoteUrl != null && allowRemoteUpdates) {
+        if (remoteUrl != null && allowRemoteUpdates && !window.isEditing()) {
             list = RemoteConnector.getItems(remoteUrl);
-        }
-
-        if (window != null) {
             window.dataChanged();
         }
     }
