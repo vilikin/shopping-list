@@ -71,6 +71,12 @@ public class Tools {
         return array;
     }
 
+    /**
+     * Creates XML representation of a shopping list item.
+     *
+     * @param item  Shopping list item
+     * @return      XML representation of the item
+     */
     public static String itemToXML(ShoppingListItem item) {
         return "<item>" +
                 "<name>" + item.getName() + "</name>" +
@@ -78,6 +84,12 @@ public class Tools {
                 "</item>";
     }
 
+    /**
+     * Creates XML representation of a shopping list.
+     *
+     * @param list  Shopping list
+     * @return      XML representation of the list
+     */
     public static String listToXML(MyLinkedList<ShoppingListItem> list) {
         String xml = "<items>";
         for (int i = 0; i < list.size(); i++) {
@@ -89,6 +101,12 @@ public class Tools {
         return xml;
     }
 
+    /**
+     * Converts XML representation of a list to an actual shopping list.
+     *
+     * @param xml   XML representation of a list
+     * @return      Shopping list
+     */
     public static MyLinkedList<ShoppingListItem> XMLToList(String xml) {
         try {
             String[] items = xml.split("<item>");

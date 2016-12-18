@@ -154,6 +154,11 @@ public class ShoppingList {
         update();
     }
 
+    /**
+     * Sets remote URL that the list is synced with.
+     *
+     * @param url Remote URL or null to disable syncing
+     */
     public void setRemoteUrl(String url) {
         remoteUrl = url;
 
@@ -163,10 +168,18 @@ public class ShoppingList {
         }
     }
 
+    /**
+     * Gets remote URL that the list is synced with.
+     *
+     * @return Remote URL or null if sync is disabled
+     */
     public String getRemoteUrl() {
         return remoteUrl;
     }
 
+    /**
+     * Syncs local list with the remote list.
+     */
     public void getListFromServer() {
         if (remoteUrl != null && allowRemoteUpdates) {
             list = RemoteConnector.getItems(remoteUrl);
@@ -212,13 +225,28 @@ public class ShoppingList {
     }
 }
 
+/**
+ * Implements thread that keeps syncing local list with the remote one.
+ */
 class RemoteUpdater implements Runnable {
+
+    /**
+     * Local shopping list.
+     */
     private ShoppingList sl;
 
+    /**
+     * Initializes remote updater with the local shopping list.
+     *
+     * @param sl Local shopping list.
+     */
     public RemoteUpdater(ShoppingList sl) {
         this.sl = sl;
     }
 
+    /**
+     * Keeps syncing local list with the remote one.
+     */
     public void run() {
         while (sl.getRemoteUrl() != null) {
             sl.getListFromServer();
