@@ -24,6 +24,7 @@ public class Tools {
 
         for (String item : items) {
             String[] itemParts = item.trim().split(" ");
+
             if (itemParts.length == 2) {
                 if (isQuantity(itemParts[0])) {
                     String name = itemParts[1];
@@ -92,6 +93,7 @@ public class Tools {
      */
     public static String listToXML(MyLinkedList<ShoppingListItem> list) {
         String xml = "<items>";
+
         for (int i = 0; i < list.size(); i++) {
             xml += itemToXML(list.get(i));
         }
@@ -107,7 +109,7 @@ public class Tools {
      * @param xml   XML representation of a list
      * @return      Shopping list
      */
-    public static MyLinkedList<ShoppingListItem> XMLToList(String xml) {
+    public static MyLinkedList<ShoppingListItem> xmlToList(String xml) {
         try {
             String[] items = xml.split("<item>");
 
@@ -131,8 +133,7 @@ public class Tools {
     }
 
     /**
-     * Checks if given string can be converted to an integer and
-     * is larger than 0.
+     * Checks if given string can be converted to an integer and it's over 0.
      *
      * @param integerString String to check
      * @return If string contains valid quantity or not

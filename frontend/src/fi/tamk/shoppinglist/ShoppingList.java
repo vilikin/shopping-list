@@ -17,12 +17,12 @@ import javax.swing.*;
 public class ShoppingList {
 
     /**
-     * List containing all of the shopping list items
+     * List containing all of the shopping list items.
      */
     private MyLinkedList<ShoppingListItem> list;
 
     /**
-     * GUI that interacts with the shopping list
+     * GUI that interacts with the shopping list.
      */
     private MainWindow window;
 
@@ -45,7 +45,7 @@ public class ShoppingList {
 
     /**
      * Appends items from the given list to the end of shopping list.
-     * <p>
+     *
      * If item with same name already exists in the shopping list,
      * quantity of the existing item is increased.
      *
@@ -58,6 +58,7 @@ public class ShoppingList {
 
             for (int j = 0; j < list.size(); j++) {
                 ShoppingListItem existingItem = list.get(j);
+
                 if (existingItem.getName().equals(appendItem.getName())) {
                     existingItem.setQuantity(existingItem.getQuantity() +
                             appendItem.getQuantity());
@@ -75,7 +76,7 @@ public class ShoppingList {
 
     /**
      * Appends one item to the end of shopping list.
-     * <p>
+     *
      * If item with same name already exists in the shopping list,
      * quantity of the existing item is increased.
      *
@@ -203,8 +204,6 @@ public class ShoppingList {
                 boolean r = RemoteConnector.removeItems(remoteUrl);
                 boolean a = true;
 
-
-
                 for (int i = 0; i < list.size(); i++) {
                     if (!RemoteConnector.appendItem(remoteUrl,
                             Tools.itemToXML(list.get(i)))) {
@@ -229,6 +228,10 @@ public class ShoppingList {
 
 /**
  * Implements thread that keeps syncing local list with the remote one.
+ *
+ * @author Vili Kinnunen
+ * @version 2016.1218
+ * @since 1.8
  */
 class RemoteUpdater implements Runnable {
 

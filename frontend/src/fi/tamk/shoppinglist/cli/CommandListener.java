@@ -14,12 +14,12 @@ import fi.tamk.shoppinglist.utils.Tools;
 public class CommandListener {
 
     /**
-     * Shopping list to interact with
+     * Shopping list to interact with.
      */
     private ShoppingList shoppingList;
 
     /**
-     * If user input is processed or not
+     * If user input is processed or not.
      */
     public boolean processCommands;
 

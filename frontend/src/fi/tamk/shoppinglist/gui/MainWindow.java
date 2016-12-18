@@ -20,17 +20,17 @@ import java.awt.event.KeyEvent;
 public class MainWindow extends JFrame {
 
     /**
-     * Shopping list to interact with
+     * Shopping list to interact with.
      */
     private ShoppingList sl;
 
     /**
-     * Model for the JTable
+     * Model for the JTable.
      */
     private AbstractTableModel model;
 
     /**
-     * Table that displays the shopping list
+     * Table that displays the shopping list.
      */
     private JTable table;
 
@@ -58,13 +58,14 @@ public class MainWindow extends JFrame {
 
         setJMenuBar(menu);
 
-
         /* ------------- ADD TABLE WITH SHOPPING LIST CONTENT ------------- */
         TableModel dataModel = new MyTableModel(sl);
 
         table = new JTable(dataModel);
 
-        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+        TableRowSorter<TableModel> sorter =
+                new TableRowSorter<TableModel>(table.getModel());
+
         table.setRowSorter(sorter);
 
         InputMap inputMap = table.getInputMap(
@@ -79,6 +80,12 @@ public class MainWindow extends JFrame {
                 "delete_row");
 
         actionMap.put("delete_row", new AbstractAction() {
+
+            /**
+             * Deletes table row.
+             *
+             * @param e ActionEvent
+             */
             public void actionPerformed(ActionEvent e) {
                 if (!table.isEditing()) {
                     sl.deleteItems(table.getSelectedRows());
@@ -111,11 +118,11 @@ public class MainWindow extends JFrame {
         JButton inputBtn = new JButton("Add");
         inputBtn.setPreferredSize(new Dimension(60, 29));
 
-        inputBtn.addActionListener(new InputListener(nameInput, quantityInput, sl));
+        inputBtn.addActionListener(new InputListener(nameInput,
+                quantityInput, sl));
 
         btnPanel.add(emptyLabel, BorderLayout.NORTH);
         btnPanel.add(inputBtn, BorderLayout.SOUTH);
-
 
         inputPanel.add(nameInput);
         inputPanel.add(quantityInput);
@@ -131,7 +138,6 @@ public class MainWindow extends JFrame {
 
         panelActionMap.put("add_item", new InputListener(nameInput,
                 quantityInput, sl));
-
 
         add(inputPanel, BorderLayout.SOUTH);
         pack();

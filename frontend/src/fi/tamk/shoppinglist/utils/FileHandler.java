@@ -18,12 +18,14 @@ public class FileHandler {
     /**
      * Reads contents of the file.
      *
-     * @return All lines of the file in one single string
+     * @param file  File to read
+     * @return      All lines of the file in one single string
      */
     public static String read(File file) throws IOException {
         String content = "";
 
         List<String> lines = Files.readAllLines(file.toPath());
+
         for (String line : lines) {
             content += line;
         }
@@ -34,10 +36,12 @@ public class FileHandler {
     /**
      * Replaces file content with the given string.
      *
+     * @param file    File to edit
      * @param content New content of the file
      */
     public static void write(File file, String content) throws IOException {
-        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(
+                new FileWriter(file)))) {
             writer.print(content);
         }
     }

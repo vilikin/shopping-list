@@ -12,12 +12,12 @@ import java.util.Scanner;
 public class Loop implements Runnable {
 
     /**
-     * Command listener to interact with
+     * Command listener to interact with.
      */
     CommandListener listener;
 
     /**
-     * Scanner listening to CLI input
+     * Scanner listening to CLI input.
      */
     private Scanner sc;
 

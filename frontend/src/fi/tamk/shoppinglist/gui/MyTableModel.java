@@ -16,7 +16,7 @@ import javax.swing.table.AbstractTableModel;
 public class MyTableModel extends AbstractTableModel {
 
     /**
-     * Shopping list that the model is based on
+     * Shopping list that the model is based on.
      */
     ShoppingList sl;
 
@@ -63,9 +63,11 @@ public class MyTableModel extends AbstractTableModel {
                 sl.updateItemName(row, (String)o);
                 break;
             case 1:
+
                 if (Tools.isQuantity((String)o)) {
                     sl.updateItemQuantity(row, Integer.parseInt((String)o));
                 }
+
                 break;
         }
     }
@@ -81,6 +83,7 @@ public class MyTableModel extends AbstractTableModel {
 
     /**
      * Gets row count for the table.
+     *
      * @return  Amount of items in the shopping list
      */
     public int getRowCount() {
@@ -96,6 +99,7 @@ public class MyTableModel extends AbstractTableModel {
      */
     public Object getValueAt(int row, int col) {
         ShoppingListItem item = sl.getList().get(row);
+
         switch (col) {
             case 0:
                 return item.getName();

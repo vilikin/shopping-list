@@ -50,6 +50,7 @@ public class InputListener extends AbstractAction implements ActionListener {
 
     /**
      * Adds new item to the shopping list if input is valid.
+     *
      * If input is not valid, focuses the field that contained invalid input.
      *
      * @param e ActionEvent

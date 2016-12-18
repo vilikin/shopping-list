@@ -16,27 +16,27 @@ import java.util.Locale;
 public class DropboxConnector {
 
     /**
-     * Dropbox app info
+     * Dropbox app info.
      */
     private DbxAppInfo appInfo;
 
     /**
-     * Config for Dropbox requests
+     * Config for Dropbox requests.
      */
     private DbxRequestConfig config;
 
     /**
-     * Dropbox web auth
+     * Dropbox web auth.
      */
     private DbxWebAuthNoRedirect webAuth;
 
     /**
-     * Dropbox client
+     * Dropbox client.
      */
     private DbxClient client;
 
     /**
-     * Access token for Dropbox
+     * Access token for Dropbox.
      */
     private String accessToken;
 

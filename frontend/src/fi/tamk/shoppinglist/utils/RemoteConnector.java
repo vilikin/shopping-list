@@ -1,28 +1,9 @@
 package fi.tamk.shoppinglist.utils;
 
 import fi.tamk.shoppinglist.ShoppingListItem;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Request;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.entity.ContentType;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HttpContext;
-
-import javax.swing.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
 
 /**
  * Implements utilities to connect with remote shopping list server.
@@ -32,6 +13,13 @@ import java.net.URL;
  * @since 1.8
  */
 public class RemoteConnector {
+
+    /**
+     * Checks if specified URL can be connected to.
+     *
+     * @param url   URL to connect
+     * @return      If connection was successful.
+     */
     public static boolean tryConnect(String url) {
         // If URL has slash at the end, remove it.
         if (url.charAt(url.length() - 1) == '/') {
@@ -47,17 +35,29 @@ public class RemoteConnector {
         }
     }
 
+    /**
+     * Gets all the items from remote list.
+     *
+     * @param url   Remote list URL
+     * @return      Items
+     */
     public static MyLinkedList<ShoppingListItem> getItems(String url) {
         try {
             Content content = Request.Get(url + "/items")
                     .execute().returnContent();
 
-            return Tools.XMLToList(content.asString());
+            return Tools.xmlToList(content.asString());
         } catch (Exception e) {
             return new MyLinkedList<>();
         }
     }
 
+    /**
+     * Removes items from remote list.
+     *
+     * @param url   Remote list URL
+     * @return      If operation was successful
+     */
     public static boolean removeItems(String url) {
         try {
             Request.Delete(url + "/items").execute();
@@ -68,6 +68,13 @@ public class RemoteConnector {
         }
     }
 
+    /**
+     * Appends items to the remote list.
+     *
+     * @param url       Remote list URL
+     * @param itemXML   XML representation of items to append
+     * @return          If operation was successful
+     */
     public static boolean appendItem(String url, String itemXML) {
         try {
             Request.Post(url + "/items").bodyString(itemXML,

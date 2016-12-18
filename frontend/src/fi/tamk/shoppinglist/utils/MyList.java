@@ -2,7 +2,11 @@ package fi.tamk.shoppinglist.utils;
 
 /**
  * Implements an interface for superior lists.
+ *
  * @param <T>   Type of objects the list contains
+ * @author Vili Kinnunen
+ * @version 2016.1011
+ * @since 1.8
  */
 public interface MyList<T> {
 
@@ -34,7 +38,7 @@ public interface MyList<T> {
     boolean isEmpty();
 
     /**
-     * Removes the element at the specified position in this list. Returns the removed element.
+     * Removes the element at the specified position in this list.
      *
      * @param index     Position of the element to be removed
      * @return          Removed element

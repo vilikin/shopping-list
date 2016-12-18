@@ -10,12 +10,12 @@ package fi.tamk.shoppinglist;
 public class ShoppingListItem {
 
     /**
-     * Name of the item
+     * Name of the item.
      */
     private String name;
 
     /**
-     * Quantity of the item
+     * Quantity of the item.
      */
     private int quantity;
 

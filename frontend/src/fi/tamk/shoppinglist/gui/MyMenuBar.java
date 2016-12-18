@@ -15,7 +15,17 @@ import java.awt.event.KeyEvent;
  * @since 1.8
  */
 public class MyMenuBar extends JMenuBar {
+
+    /**
+     * Remote URL.
+     */
     private String url;
+
+    /**
+     * Initializes menu bar with all the functionality.
+     *
+     * @param sl Shopping list to interact with
+     */
     public MyMenuBar(ShoppingList sl) {
         DropboxConnector dbx = new DropboxConnector();
 
@@ -44,7 +54,8 @@ public class MyMenuBar extends JMenuBar {
 
                     sl.replace(Tools.strToList(rawContent));
                 } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(this.getParent(), "Couldn't open that file!");
+                    JOptionPane.showMessageDialog(this.getParent(),
+                            "Couldn't open that file!");
                 }
             }
         });
@@ -62,7 +73,8 @@ public class MyMenuBar extends JMenuBar {
                     String content = Tools.listToStr(sl.getList());
                     FileHandler.write(fc.getSelectedFile(), content);
                 } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(this.getParent(), "Error while saving the file!");
+                    JOptionPane.showMessageDialog(this.getParent(),
+                            "Error while saving the file!");
                 }
             }
         });
@@ -80,7 +92,8 @@ public class MyMenuBar extends JMenuBar {
                     String rawContent = FileHandler.read(fc.getSelectedFile());
                     sl.append(Tools.strToList(rawContent));
                 } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(this.getParent(), "Couldn't open that file!");
+                    JOptionPane.showMessageDialog(this.getParent(),
+                            "Couldn't open that file!");
                 }
             }
         });
@@ -94,6 +107,7 @@ public class MyMenuBar extends JMenuBar {
 
         dbOpen.addActionListener((e) -> {
             String[] choices = dbx.getFiles();
+
             if (choices.length > 0) {
                 String input = (String) JOptionPane.showInputDialog(
                         this.getParent(),
@@ -135,9 +149,12 @@ public class MyMenuBar extends JMenuBar {
 
         dbConnect.addActionListener((e) -> {
             if (dbx.startConnect()) {
-                String key = JOptionPane.showInputDialog(this.getParent(), "Enter key:");
+                String key = JOptionPane.showInputDialog(this.getParent(),
+                        "Enter key:");
+
                 if (dbx.finishConnect(key)) {
-                    JOptionPane.showMessageDialog(this.getParent(), "Connected!");
+                    JOptionPane.showMessageDialog(this.getParent(),
+                            "Connected!");
                     dbOpen.setEnabled(true);
                     dbSave.setEnabled(true);
                 }
@@ -158,24 +175,29 @@ public class MyMenuBar extends JMenuBar {
         JMenuItem remoteConnect = new JMenuItem("Connect to remote server",
                 KeyEvent.VK_R);
 
-        JMenuItem remoteDisconnect = new JMenuItem("Disconnect from remote server",
+        JMenuItem remoteDisconnect = new JMenuItem(
+                "Disconnect from remote server",
                 KeyEvent.VK_C);
 
         remoteDisconnect.setEnabled(false);
 
         remoteConnect.addActionListener((e) -> {
-            url = JOptionPane.showInputDialog(this.getParent(), "Enter remote address:");
+            url = JOptionPane.showInputDialog(this.getParent(),
+                    "Enter remote address:");
+
             if (url.charAt(url.length() - 1) == '/') {
                 url = url.substring(0, url.length() - 2);
             }
 
             if (url != null && RemoteConnector.tryConnect(url)) {
-                JOptionPane.showMessageDialog(this.getParent(), "Successfully connected!");
+                JOptionPane.showMessageDialog(this.getParent(),
+                        "Successfully connected!");
                 sl.setRemoteUrl(url);
                 remoteConnect.setEnabled(false);
                 remoteDisconnect.setEnabled(true);
             } else {
-                JOptionPane.showMessageDialog(this.getParent(), "Error! Couldn't connect to the remote server!");
+                JOptionPane.showMessageDialog(this.getParent(),
+                        "Error! Couldn't connect to the remote server!");
             }
         });
 

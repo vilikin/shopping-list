@@ -2,6 +2,7 @@ package fi.tamk.shoppinglist.utils;
 
 /**
  * Implements an item that is part of MyLinkedList.
+ *
  * @author Vili Kinnunen
  * @version 2016.1011
  * @since 1.8
@@ -9,17 +10,18 @@ package fi.tamk.shoppinglist.utils;
 public class MyItem<T> {
 
     /**
-     * Element of the item
+     * Element of the item.
      */
     private T element;
 
     /**
-     * Next item
+     * Next item.
      */
     private MyItem<T> next;
 
     /**
      * Initializes item with element. Sets next item as null.
+     *
      * @param element   Element of this item
      */
     public MyItem(T element) {
@@ -28,7 +30,8 @@ public class MyItem<T> {
     }
 
     /**
-     * Get element of this item.
+     * Gets element of this item.
+     *
      * @return Element of this item
      */
     public T getElement() {
@@ -37,6 +40,7 @@ public class MyItem<T> {
 
     /**
      * Returns next element.
+     *
      * @return Next element
      */
     public MyItem<T> getNext() {
@@ -45,6 +49,7 @@ public class MyItem<T> {
 
     /**
      * Sets next item in the list.
+     *
      * @param next  Next item
      */
     public void setNext(MyItem<T> next) {
